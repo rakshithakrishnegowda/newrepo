@@ -22,7 +22,7 @@ pipeline {
         stage('DEPLOY') {
             steps{
                 sh '''
-                    sleep 4
+                    sleep 8
                     echo "This is a DEPLOY stage"
                 '''
             }
