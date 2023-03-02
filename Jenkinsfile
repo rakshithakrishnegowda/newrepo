@@ -21,8 +21,15 @@ pipeline {
             steps{
                 sh '''
                     echo "This is a DEPLOY stage"
-                '''
+                  '''
             }
         }
+       stage('4th') {
+            steps{
+                sh '''
+                    echo "This is a 4th stage"
+                   '''
+            }
+       }
     }
 }
