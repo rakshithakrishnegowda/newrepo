@@ -9,13 +9,28 @@ pipeline {
     }
 
     stages {
+    
         stage('BUILD') {
-            steps{
+        parallel {
+        
+        stage('BUILD ON LINUX MACHINE') {
+                    steps {
+                        sh '''
+                            echo "This is a BUILD on LINUX"
+                        '''
+                    }
+                }
+        
+            stage('BUILD ON WINDOWS MACHINE') {
+                  steps{
                     sh '''
-                        echo "This is a BUILD stage $BRANCH_NAME"
+                        echo "This is a BUILD on WINDOWS"
                     '''
                   }
-        }
+              }
+              
+           }
+       }
 
         stage('TEST') {
             parallel {
@@ -23,7 +38,6 @@ pipeline {
                 stage('TEST ON LINUX MACHINE') {
                     steps {
                         sh '''
-                            sleep 6
                             echo "This is a TEST on LINUX"
                         '''
                     }
@@ -32,7 +46,6 @@ pipeline {
                 stage('TEST ON WINDOWS MACHINE') {
                     steps {
                         sh '''
-                            sleep 6
                             echo "This is a TEST on WINDOWS"
                         '''
                     }
@@ -49,7 +62,6 @@ pipeline {
                 stage('TEST ON CHROME MACHINE') {
                     steps {
                         sh '''
-                            sleep 6
                             echo "This is a TEST on WINDOWS"
                         '''
                     }
