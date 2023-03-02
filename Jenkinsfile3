@@ -1,1 +1,39 @@
 pipeline {
+    agent any
+     environment {
+        DB-URL = "13.233.178.233"
+     }
+    stages{
+        stage('BUILD') {
+            steps{
+           
+                 sh '''
+                    echo "This is a BUILD stage $DB-URL"
+                '''
+            }
+        }
+
+        stage('TEST') {
+            steps{
+                sh '''
+                    echo "This is a TEST stage $DB-URL"
+                '''
+            }
+        }
+
+        stage('DEPLOY') {
+            steps{
+                sh '''
+                    echo "This is a DEPLOY stage $DB-URL"
+                  '''
+            }
+        }
+       stage('4th') {
+            steps{
+                sh '''
+                    echo "This is a 4th stage $DB-URL"
+                   '''
+            }
+       }
+    }
+}
