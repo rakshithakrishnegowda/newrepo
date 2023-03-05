@@ -4,12 +4,12 @@ ipeline {
         parameters {
         choice choices: ['main', 'branch1'], name: 'branch'
         }
-/*
+
         environment {
         BRANCH_NAME = "${branch}"
         }
 
-*/
+
     stages {
             stage('STAGE1') {
                 when {
