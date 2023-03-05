@@ -1,26 +1,35 @@
-piepline {
-    agent any 
-    stages {
-        stage('parallel') {
-            parallel {
-                stage('STAGE-1') {
-                    when {
-                        branch "main"
-                    }
-                    steps{
-                        sh "echo STEGE-2 executes if branch is main"
-                    }
-                }
+ipeline {
+    agent any
 
-                stage('STAGE-2'){
-                    when {
-                        branch "main"
+        parameters {
+        choice choices: ['main', 'branch1'], name: 'branch'
+        }
+/*
+        environment {
+        BRANCH_NAME = "${branch}"
+        }
+
+*/
+    stages {
+            stage('STAGE1') {
+                when {
+                        expression{ params.branch == 'main' } 
                     }
-                    steps{
-                        sh "echo STEGE-2 executes if branch is main"
-                    }
+                steps {
+                    sh '''
+                    echo "This is STAGE1 printing as it is running on master"
+                    '''
                 }
-            }    
-        }    
+            }
+            stage('STAGE2') {
+                when {
+                        expression{ params.branch == 'branch1' }
+                    }
+                steps {
+                    sh '''
+                    echo "This is STAGE2 printing as it is running the branch1"
+                    '''
+                }
+            }
+        }
     }
-}
