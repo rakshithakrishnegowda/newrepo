@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+        parameters {
+        choice choices: ['main', 'branch1'], name: 'branch'
+        }
+
+        environment {
+        BRANCH_NAME = "${branch}"
+        }
+
+
+    stages {
+            stage('STAGE1') {
+                when {
+                        expression{ params.branch == 'main' } 
+                    }
+                steps {
+                    sh '''
+                    echo "This is STAGE1 printing as it is running on master"
+                    '''
+                }
+            }
+            stage('STAGE2') {
+                when {
+                        expression{ params.branch == 'branch1' }
+                    }
+                steps {
+                    sh '''
+                    echo "This is STAGE2 printing as it is running the branch1"
+                    '''
+                }
+            }
+        }
+    }

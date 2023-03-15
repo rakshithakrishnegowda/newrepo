@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+        parameters {
+        string defaultValue: 'main', name: 'branch', trim: true
+        }
+
+        environment {
+        BRANCH_NAME = "${branch}"
+        }
+
+    stages {
+            stage('BUILD') {
+                steps {
+                    sh '''
+                    echo "This is BUILD STAGE"
+                    '''
+                }
+            }
+            stage('TESTING') {
+                    parallel {
+                        stage('TESTING IN WINDOWS MACHINE') {
+                            when {
+                            branch 'main'
+                                }
+                            steps {
+                                sh '''
+                                echo "This is TESTING STAGE RUNNING ON WINDOWS MACHINE"
+                                '''
+                            }
+                        }
+                        stage('TESTING IN LINUX MACHINE') {
+                            when {
+                            branch 'main'
+                                }
+                            steps {
+                                sh '''
+                                echo "This is TESTING STAGE RUNNING ON LINUX MACHINE"
+                                '''
+                            }
+                        }
+                    stage('TESTING IN MAC MACHINE') {
+                        when {
+                            branch 'main'
+                                }
+                        steps {
+                            sh '''
+                            echo "This is TESTING STAGE RUNNING ON MAC MACHINE"
+                            '''
+                    }
+                }
+            }
+            
+        }
+        stage('DEPLOY') {
+            steps {
+                sh '''
+                echo "This is DEPLOY STAGE"
+                '''
+            }
+        }
+    }
+}

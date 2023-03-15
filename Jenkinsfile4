@@ -1,0 +1,82 @@
+pipeline {
+    agent any
+    parameters {
+        string defaultValue: 'main', name: 'BRANCH', trim: true
+    }
+
+    environment {
+        BRANCH_NAME = "${BRANCH}"
+    }
+
+    stages {
+    
+        stage('BUILD') {
+        parallel {
+        
+        stage('BUILD ON LINUX MACHINE') {
+                    steps {
+                        sh '''
+                            echo "This is a BUILD on LINUX"
+                        '''
+                    }
+                }
+        
+            stage('BUILD ON WINDOWS MACHINE') {
+                  steps{
+                    sh '''
+                        echo "This is a BUILD on WINDOWS"
+                    '''
+                  }
+              }
+              
+           }
+       }
+
+        stage('TEST') {
+            parallel {
+
+                stage('TEST ON LINUX MACHINE') {
+                    steps {
+                        sh '''
+                            echo "This is a TEST on LINUX"
+                        '''
+                    }
+                }
+
+                stage('TEST ON WINDOWS MACHINE') {
+                    steps {
+                        sh '''
+                            echo "This is a TEST on WINDOWS"
+                        '''
+                    }
+                }
+
+                stage('TEST ON MAC MACHINE') {
+                    steps {
+                            sh '''
+                                echo "This is a TEST on WINDOWS"
+                            '''
+                    }
+                }
+
+                stage('TEST ON CHROME MACHINE') {
+                    steps {
+                        sh '''
+                            echo "This is a TEST on WINDOWS"
+                        '''
+                    }
+                }
+
+            }
+        }
+
+        stage('DEPLOY') {
+            steps{
+                sh '''
+                    echo "This is a DEPLOY stage $BRANCH_NAME"
+                '''
+            }
+        }
+    }
+}
+    
